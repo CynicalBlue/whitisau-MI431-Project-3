@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -71,9 +72,13 @@ public class GridManager : MonoBehaviour
     public Sprite player2RookPromotedSprite;
 
     public GameObject currentPieceSelected;
+    public GameObject previousPieceSelected;
     public GameObject promoteQuestion;
     public GameObject yesOption;
     public GameObject noOption;
+
+    public bool player1Check = false;
+    public bool player2Check = false;
 
     void Start()
     {
@@ -122,6 +127,31 @@ public class GridManager : MonoBehaviour
         spawnedTile5.Init(false);
         spawnedTile5.isOffBoard = true;
         _tiles[new Vector2(10, 0)] = spawnedTile5;
+        var spawnedTile6 = Instantiate(_tilePrefab, new Vector3(-2, 4), Quaternion.identity);
+        spawnedTile6.name = $"Tile {-2} {4}";
+        spawnedTile6.Init(false);
+        spawnedTile6.isOffBoard = true;
+        _tiles[new Vector2(-2, 4)] = spawnedTile6;
+        var spawnedTile7 = Instantiate(_tilePrefab, new Vector3(-3, 4), Quaternion.identity);
+        spawnedTile7.name = $"Tile {-3} {4}";
+        spawnedTile7.Init(false);
+        spawnedTile7.isOffBoard = true;
+        _tiles[new Vector2(-3, 4)] = spawnedTile7;
+        var spawnedTile8 = Instantiate(_tilePrefab, new Vector3(-4, 4), Quaternion.identity);
+        spawnedTile8.name = $"Tile {-4} {4}";
+        spawnedTile8.Init(false);
+        spawnedTile8.isOffBoard = true;
+        _tiles[new Vector2(-4, 4)] = spawnedTile8;
+        var spawnedTile9 = Instantiate(_tilePrefab, new Vector3(-5, 4), Quaternion.identity);
+        spawnedTile9.name = $"Tile {-5} {4}";
+        spawnedTile9.Init(false);
+        spawnedTile9.isOffBoard = true;
+        _tiles[new Vector2(-5, 4)] = spawnedTile9;
+        var spawnedTile10 = Instantiate(_tilePrefab, new Vector3(-6, 4), Quaternion.identity);
+        spawnedTile10.name = $"Tile {-6} {4}";
+        spawnedTile10.Init(false);
+        spawnedTile10.isOffBoard = true;
+        _tiles[new Vector2(-6, 4)] = spawnedTile10;
 
         _cam.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10); // This centers the board in the camera
         SpawnPieces();
@@ -164,19 +194,23 @@ public class GridManager : MonoBehaviour
             tileReference.Value.cutOffPath2 = false;
             tileReference.Value.cutOffPath3 = false;
             tileReference.Value.cutOffPath4 = false;
+            tileReference.Value.unsafeForKing1 = false;
+            tileReference.Value.unsafeForKing2 = false;
         }
         player1PawnPosition = player1PawnReference.transform.position;
         Tile player1PawnTile = GetTileAtPosition(player1PawnPosition);
         if (player1PawnTile != null)
         {
             player1PawnTile.UpdateCurrentPieceUnder(player1PawnReference);
-            if (player1PawnReference.transform.localScale.y != -.8)
+            if (player1PawnReference.transform.localScale.y != -.8f)
             {
                 player1PawnTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
             else
             {
                 player1PawnTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             Tile player1PawnTileUp1 = GetTileAtPosition(new Vector2(player1PawnReference.transform.position.x, player1PawnReference.transform.position.y + 1));
             if (player1PawnTileUp1 != null)
@@ -205,19 +239,22 @@ public class GridManager : MonoBehaviour
         {
             player1KingTile.UpdateCurrentPieceUnder(player1KingReference);
             player1KingTile.hasPlayer1Piece = true;
+            player1PawnReference.GetComponent<Piece>().player1Aligned = true;
         }
         player1GoldPosition = player1GoldReference.transform.position;
         Tile player1GoldTile = GetTileAtPosition(player1GoldPosition);
         if (player1GoldTile != null)
         {
             player1GoldTile.UpdateCurrentPieceUnder(player1GoldReference);
-            if (player1GoldReference.transform.localScale.y != -.8)
+            if (player1GoldReference.transform.localScale.y != -.8f)
             {
                 player1GoldTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
             else
             {
                 player1GoldTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
         }
         player1SilverPosition = player1SilverReference.transform.position;
@@ -225,13 +262,15 @@ public class GridManager : MonoBehaviour
         if (player1SilverTile != null)
         {
             player1SilverTile.UpdateCurrentPieceUnder(player1SilverReference);
-            if (player1SilverReference.transform.localScale.y != -.8)
+            if (player1SilverReference.transform.localScale.y != -.8f)
             {
                 player1SilverTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
             else
             {
                 player1SilverTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
         }
         player1BishopPosition = player1BishopReference.transform.position;
@@ -239,13 +278,15 @@ public class GridManager : MonoBehaviour
         if (player1BishopTile != null)
         {
             player1BishopTile.UpdateCurrentPieceUnder(player1BishopReference);
-            if (player1BishopReference.transform.localScale.y != -.8)
+            if (player1BishopReference.transform.localScale.y != -.8f)
             {
                 player1BishopTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
             else
             {
                 player1BishopTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
         }
         player1RookPosition = player1RookReference.transform.position;
@@ -253,13 +294,15 @@ public class GridManager : MonoBehaviour
         if (player1RookTile != null)
         {
             player1RookTile.UpdateCurrentPieceUnder(player1RookReference);
-            if (player1RookReference.transform.localScale.y != -.8)
+            if (player1RookReference.transform.localScale.y != -.8f)
             {
                 player1RookTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
             else
             {
                 player1RookTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
         }
         player2PawnPosition = player2PawnReference.transform.position;
@@ -267,30 +310,32 @@ public class GridManager : MonoBehaviour
         if (player2PawnTile != null)
         {
             player2PawnTile.UpdateCurrentPieceUnder(player2PawnReference);
-            if (player2PawnReference.transform.localScale.y != -.8)
+            if (player2PawnReference.transform.localScale.y != -.8f)
             {
                 player2PawnTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             else
             {
                 player2PawnTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
-            Tile player2PawnTileUp1 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 1));
+            Tile player2PawnTileUp1 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y - 1));
             if (player2PawnTileUp1 != null)
             {
                 player2PawnTileUp1.isPawn2VerticalPath = true;
             }
-            Tile player2PawnTileUp2 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 2));
+            Tile player2PawnTileUp2 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y - 2));
             if (player2PawnTileUp2 != null)
             {
                 player2PawnTileUp2.isPawn2VerticalPath = true;
             }
-            Tile player2PawnTileUp3 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 3));
+            Tile player2PawnTileUp3 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y - 3));
             if (player2PawnTileUp3 != null)
             {
                 player2PawnTileUp3.isPawn2VerticalPath = true;
             }
-            Tile player2PawnTileUp4 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 4));
+            Tile player2PawnTileUp4 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y - 4));
             if (player2PawnTileUp4 != null)
             {
                 player2PawnTileUp4.isPawn2VerticalPath = true;
@@ -302,19 +347,22 @@ public class GridManager : MonoBehaviour
         {
             player2KingTile.UpdateCurrentPieceUnder(player2KingReference);
             player2KingTile.hasPlayer2Piece = true;
+            player1PawnReference.GetComponent<Piece>().player1Aligned = false;
         }
         player2GoldPosition = player2GoldReference.transform.position;
         Tile player2GoldTile = GetTileAtPosition(player2GoldPosition);
         if (player2GoldTile != null)
         {
             player2GoldTile.UpdateCurrentPieceUnder(player2GoldReference);
-            if (player2GoldReference.transform.localScale.y != -.8)
+            if (player2GoldReference.transform.localScale.y != -.8f)
             {
                 player2GoldTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             else
             {
                 player2GoldTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
         }
         player2SilverPosition = player2SilverReference.transform.position;
@@ -322,13 +370,15 @@ public class GridManager : MonoBehaviour
         if (player2SilverTile != null)
         {
             player2SilverTile.UpdateCurrentPieceUnder(player2SilverReference);
-            if (player2SilverReference.transform.localScale.y != -.8)
+            if (player2SilverReference.transform.localScale.y != -.8f)
             {
                 player2SilverTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             else
             {
                 player2SilverTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
         }
         player2BishopPosition = player2BishopReference.transform.position;
@@ -336,13 +386,15 @@ public class GridManager : MonoBehaviour
         if(player2BishopTile != null)
         {
             player2BishopTile.UpdateCurrentPieceUnder(player2BishopReference);
-            if (player2BishopReference.transform.localScale.y != -.8)
+            if (player2BishopReference.transform.localScale.y != -.8f)
             {
                 player2BishopTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             else
             {
                 player2BishopTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
         }
         player2RookPosition = player2RookReference.transform.position;
@@ -350,15 +402,19 @@ public class GridManager : MonoBehaviour
         if (player2RookTile != null)
         {
             player2RookTile.UpdateCurrentPieceUnder(player2RookReference);
-            if (player2RookReference.transform.localScale.y != -.8)
+            if (player2RookReference.transform.localScale.y != -.8f)
             {
                 player2RookTile.hasPlayer2Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = false;
             }
             else
             {
                 player2RookTile.hasPlayer1Piece = true;
+                player1PawnReference.GetComponent<Piece>().player1Aligned = true;
             }
         }
+        previousPieceSelected = currentPieceSelected;
+        currentPieceSelected = null;
     }
 
     public void PromotePiece(string piece)
@@ -406,5 +462,23 @@ public class GridManager : MonoBehaviour
         promoteQuestion.SetActive(false);
         yesOption.SetActive(false);
         noOption.SetActive(false);
+    }
+
+    public void UnSelectPiece()
+    {
+        foreach (var tileReference in _tiles)
+        {
+            tileReference.Value._selection.SetActive(false);
+        }
+    }
+
+    public void Player1Wins()
+    {
+        Debug.Log("Player 1 Wins!");
+    }
+
+    public void Player2Wins()
+    {
+        Debug.Log("Player 2 Wins!");
     }
 }

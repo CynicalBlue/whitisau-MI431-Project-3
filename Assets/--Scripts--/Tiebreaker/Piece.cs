@@ -6,10 +6,5 @@ using UnityEngine;
 
 public class Piece : MonoBehaviour
 {
-    [SerializeField] public string pieceName = "";
-
-    public void PlaceUnit()
-    {
-        Debug.Log("Pressed");
-    }
+    [SerializeField] public bool player1Aligned = false;
 }
