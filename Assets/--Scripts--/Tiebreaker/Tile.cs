@@ -108,11 +108,19 @@ public class Tile : MonoBehaviour
                 {
                     currentPieceUnder.transform.position = new Vector2(-2, 4);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1PawnPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Pawn");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player1SilverReference)
                 {
                     currentPieceUnder.transform.position = new Vector2(-3, 4);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1SilverPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Silver");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player1GoldReference)
                 {
@@ -123,112 +131,202 @@ public class Tile : MonoBehaviour
                 {
                     currentPieceUnder.transform.position = new Vector2(-5, 4);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1BishopPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Bishop");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player1RookReference)
                 {
                     currentPieceUnder.transform.position = new Vector2(-6, 4);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1RookPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Rook");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player2PawnReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(-2, 5);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2PawnPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Pawn");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player2SilverReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(-3, 5);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2SilverPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Silver");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player2GoldReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(-4, 5);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                }
+                if (currentPieceUnder == gridManagerReference.player2BishopReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(-5, 5);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2BishopPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Bishop");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player2RookReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(-6, 5);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2RookPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Rook");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player1KingReference)
                 {
+                    Destroy(gridManagerReference.player1KingReference);
                     gridManagerReference.Player2Wins();
                 }
                 gridManagerReference.UpdatePiecePositions();
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1PawnReference && ((gridManagerReference.player1PawnPosition == new Vector2(0, 4) || gridManagerReference.player1PawnPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1PawnPosition == new Vector2(2, 4) || gridManagerReference.player1PawnPosition == new Vector2(3, 4) || gridManagerReference.player1PawnPosition == new Vector2(4, 4) && 
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1PawnPosition == new Vector2(0, 0) || gridManagerReference.player1PawnPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1PawnPosition == new Vector2(2, 0) || gridManagerReference.player1PawnPosition == new Vector2(3, 0) || gridManagerReference.player1PawnPosition == new Vector2(4, 0) && 
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1PawnPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1PawnReference && !gridManagerReference.player1PawnPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1PawnPosition == new Vector2(0, 4) || gridManagerReference.player1PawnPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1PawnPosition == new Vector2(2, 4) || gridManagerReference.player1PawnPosition == new Vector2(3, 4) || gridManagerReference.player1PawnPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1PawnPosition == new Vector2(0, 0) || gridManagerReference.player1PawnPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1PawnPosition == new Vector2(2, 0) || gridManagerReference.player1PawnPosition == new Vector2(3, 0) || gridManagerReference.player1PawnPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && ((gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && !gridManagerReference.player1SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && ((gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && !gridManagerReference.player1BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1RookReference && ((gridManagerReference.player1RookPosition == new Vector2(0, 4) || gridManagerReference.player1RookPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1RookPosition == new Vector2(2, 4) || gridManagerReference.player1RookPosition == new Vector2(3, 4) || gridManagerReference.player1RookPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1RookPosition == new Vector2(0, 0) || gridManagerReference.player1RookPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1RookPosition == new Vector2(2, 0) || gridManagerReference.player1RookPosition == new Vector2(3, 0) || gridManagerReference.player1RookPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1RookPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1RookReference && !gridManagerReference.player1RookPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1RookPosition == new Vector2(0, 4) || gridManagerReference.player1RookPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1RookPosition == new Vector2(2, 4) || gridManagerReference.player1RookPosition == new Vector2(3, 4) || gridManagerReference.player1RookPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1RookPosition == new Vector2(0, 0) || gridManagerReference.player1RookPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1RookPosition == new Vector2(2, 0) || gridManagerReference.player1RookPosition == new Vector2(3, 0) || gridManagerReference.player1RookPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && ((gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2PawnPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && !gridManagerReference.player2PawnPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && ((gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && !gridManagerReference.player2SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && ((gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && !gridManagerReference.player2BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && ((gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2RookPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && !gridManagerReference.player2RookPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
                 return;
             }
@@ -239,11 +337,19 @@ public class Tile : MonoBehaviour
                 {
                     currentPieceUnder.transform.position = new Vector2(6, 0);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2PawnPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Pawn");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player2SilverReference)
                 {
                     currentPieceUnder.transform.position = new Vector2(7, 0);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2SilverPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Silver");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player2GoldReference)
                 {
@@ -254,112 +360,202 @@ public class Tile : MonoBehaviour
                 {
                     currentPieceUnder.transform.position = new Vector2(9, 0);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2BishopPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Bishop");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player2RookReference)
                 {
                     currentPieceUnder.transform.position = new Vector2(10, 0);
                     currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player2RookPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player2Rook");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player1PawnReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(6, -1);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1PawnPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Pawn");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player1SilverReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(7, -1);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1SilverPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Silver");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player1GoldReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(8, -1);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                }
+                if (currentPieceUnder == gridManagerReference.player1BishopReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(9, -1);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1BishopPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Bishop");
+                    }
+                }
+                if (currentPieceUnder == gridManagerReference.player1RookReference)
+                {
+                    currentPieceUnder.transform.position = new Vector2(10, -1);
+                    currentPieceUnder.transform.localScale = new Vector3(currentPieceUnder.transform.localScale.x, currentPieceUnder.transform.localScale.y * -1, currentPieceUnder.transform.localScale.z);
+                    if (gridManagerReference.player1RookPromoted)
+                    {
+                        gridManagerReference.DemotePiece("player1Rook");
+                    }
                 }
                 if (currentPieceUnder == gridManagerReference.player2KingReference)
                 {
+                    Destroy(gridManagerReference.player2KingReference);
                     gridManagerReference.Player1Wins();
                 }
                 gridManagerReference.UpdatePiecePositions();
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1PawnReference && ((gridManagerReference.player1PawnPosition == new Vector2(0, 4) || gridManagerReference.player1PawnPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1PawnPosition == new Vector2(2, 4) || gridManagerReference.player1PawnPosition == new Vector2(3, 4) || gridManagerReference.player1PawnPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1PawnPosition == new Vector2(0, 0) || gridManagerReference.player1PawnPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1PawnPosition == new Vector2(2, 0) || gridManagerReference.player1PawnPosition == new Vector2(3, 0) || gridManagerReference.player1PawnPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1PawnPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1PawnReference && !gridManagerReference.player1PawnPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1PawnPosition == new Vector2(0, 4) || gridManagerReference.player1PawnPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1PawnPosition == new Vector2(2, 4) || gridManagerReference.player1PawnPosition == new Vector2(3, 4) || gridManagerReference.player1PawnPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1PawnPosition == new Vector2(0, 0) || gridManagerReference.player1PawnPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1PawnPosition == new Vector2(2, 0) || gridManagerReference.player1PawnPosition == new Vector2(3, 0) || gridManagerReference.player1PawnPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && ((gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && !gridManagerReference.player1SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && ((gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && !gridManagerReference.player1BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1RookReference && ((gridManagerReference.player1RookPosition == new Vector2(0, 4) || gridManagerReference.player1RookPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1RookPosition == new Vector2(2, 4) || gridManagerReference.player1RookPosition == new Vector2(3, 4) || gridManagerReference.player1RookPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1RookPosition == new Vector2(0, 0) || gridManagerReference.player1RookPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1RookPosition == new Vector2(2, 0) || gridManagerReference.player1RookPosition == new Vector2(3, 0) || gridManagerReference.player1RookPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1RookPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1RookReference && !gridManagerReference.player1RookPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1RookPosition == new Vector2(0, 4) || gridManagerReference.player1RookPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1RookPosition == new Vector2(2, 4) || gridManagerReference.player1RookPosition == new Vector2(3, 4) || gridManagerReference.player1RookPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1RookPosition == new Vector2(0, 0) || gridManagerReference.player1RookPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1RookPosition == new Vector2(2, 0) || gridManagerReference.player1RookPosition == new Vector2(3, 0) || gridManagerReference.player1RookPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && ((gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2PawnPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && !gridManagerReference.player2PawnPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && ((gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && !gridManagerReference.player2SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && ((gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && !gridManagerReference.player2BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && ((gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2RookPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && !gridManagerReference.player2RookPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
                 return;
             }
@@ -384,29 +580,39 @@ public class Tile : MonoBehaviour
                         gridManagerReference.noOption.SetActive(true);
                     }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && ((gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1SilverReference && !gridManagerReference.player1SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1SilverPosition == new Vector2(0, 4) || gridManagerReference.player1SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 4) || gridManagerReference.player1SilverPosition == new Vector2(3, 4) || gridManagerReference.player1SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1SilverPosition == new Vector2(0, 0) || gridManagerReference.player1SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1SilverPosition == new Vector2(2, 0) || gridManagerReference.player1SilverPosition == new Vector2(3, 0) || gridManagerReference.player1SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && ((gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player1BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player1BishopReference && !gridManagerReference.player1BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player1BishopPosition == new Vector2(0, 4) || gridManagerReference.player1BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 4) || gridManagerReference.player1BishopPosition == new Vector2(3, 4) || gridManagerReference.player1BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player1BishopPosition == new Vector2(0, 0) || gridManagerReference.player1BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player1BishopPosition == new Vector2(2, 0) || gridManagerReference.player1BishopPosition == new Vector2(3, 0) || gridManagerReference.player1BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
                 if (gridManagerReference.previousPieceSelected == gridManagerReference.player1RookReference && !gridManagerReference.player1RookPromoted)
                 {
@@ -425,53 +631,73 @@ public class Tile : MonoBehaviour
                         gridManagerReference.noOption.SetActive(true);
                     }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && ((gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2PawnPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2PawnReference && !gridManagerReference.player2PawnPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2PawnPosition == new Vector2(0, 4) || gridManagerReference.player2PawnPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 4) || gridManagerReference.player2PawnPosition == new Vector2(3, 4) || gridManagerReference.player2PawnPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2PawnPosition == new Vector2(0, 0) || gridManagerReference.player2PawnPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2PawnPosition == new Vector2(2, 0) || gridManagerReference.player2PawnPosition == new Vector2(3, 0) || gridManagerReference.player2PawnPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && ((gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2SilverPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2SilverReference && !gridManagerReference.player2SilverPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2SilverPosition == new Vector2(0, 4) || gridManagerReference.player2SilverPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 4) || gridManagerReference.player2SilverPosition == new Vector2(3, 4) || gridManagerReference.player2SilverPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2SilverPosition == new Vector2(0, 0) || gridManagerReference.player2SilverPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2SilverPosition == new Vector2(2, 0) || gridManagerReference.player2SilverPosition == new Vector2(3, 0) || gridManagerReference.player2SilverPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && ((gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2BishopPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2BishopReference && !gridManagerReference.player2BishopPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2BishopPosition == new Vector2(0, 4) || gridManagerReference.player2BishopPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 4) || gridManagerReference.player2BishopPosition == new Vector2(3, 4) || gridManagerReference.player2BishopPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2BishopPosition == new Vector2(0, 0) || gridManagerReference.player2BishopPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2BishopPosition == new Vector2(2, 0) || gridManagerReference.player2BishopPosition == new Vector2(3, 0) || gridManagerReference.player2BishopPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
-                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && ((gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == true) ||
-                    (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
-                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0) &&
-                    gridManagerReference.currentPieceSelected.GetComponent<Piece>().player1Aligned == false))
-                    && !gridManagerReference.player2RookPromoted)
+                if (gridManagerReference.previousPieceSelected == gridManagerReference.player2RookReference && !gridManagerReference.player2RookPromoted)
                 {
-                    gridManagerReference.promoteQuestion.SetActive(true);
-                    gridManagerReference.yesOption.SetActive(true);
-                    gridManagerReference.noOption.SetActive(true);
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == true && (gridManagerReference.player2RookPosition == new Vector2(0, 4) || gridManagerReference.player2RookPosition == new Vector2(1, 4)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 4) || gridManagerReference.player2RookPosition == new Vector2(3, 4) || gridManagerReference.player2RookPosition == new Vector2(4, 4)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
+                    if (gridManagerReference.previousPieceSelected.GetComponent<Piece>().player1Aligned == false && (gridManagerReference.player2RookPosition == new Vector2(0, 0) || gridManagerReference.player2RookPosition == new Vector2(1, 0)
+                    || gridManagerReference.player2RookPosition == new Vector2(2, 0) || gridManagerReference.player2RookPosition == new Vector2(3, 0) || gridManagerReference.player2RookPosition == new Vector2(4, 0)))
+                    {
+                        gridManagerReference.promoteQuestion.SetActive(true);
+                        gridManagerReference.yesOption.SetActive(true);
+                        gridManagerReference.noOption.SetActive(true);
+                    }
                 }
                 return;
             }
