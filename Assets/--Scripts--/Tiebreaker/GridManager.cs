@@ -227,6 +227,7 @@ public class GridManager : MonoBehaviour
 
     public void SpawnPieces()
     {
+        // Only called at start of game
         player1PawnReference = Instantiate(player1Pawn, new Vector2(0, 1), Quaternion.identity);
         player1KingReference = Instantiate(player1King, new Vector2(0, 0), Quaternion.identity);
         player1GoldReference = Instantiate(player1Gold, new Vector2(1, 0), Quaternion.identity);
@@ -244,6 +245,7 @@ public class GridManager : MonoBehaviour
 
     public void UpdatePiecePositions()
     {
+        // Called by Tile.cs everytime a piece moves or is placed.
         foreach (var tileReference in _tiles)
         {
             tileReference.Value._selection.SetActive(false);
@@ -256,8 +258,6 @@ public class GridManager : MonoBehaviour
             tileReference.Value.cutOffPath2 = false;
             tileReference.Value.cutOffPath3 = false;
             tileReference.Value.cutOffPath4 = false;
-            tileReference.Value.unsafeForKing1 = false;
-            tileReference.Value.unsafeForKing2 = false;
         }
         player1PawnPosition = player1PawnReference.transform.position;
         Tile player1PawnTile = GetTileAtPosition(player1PawnPosition);
@@ -293,6 +293,26 @@ public class GridManager : MonoBehaviour
             if (player1PawnTileUp4 != null)
             {
                 player1PawnTileUp4.isPawn1VerticalPath = true;
+            }
+            Tile player1PawnTileUp5 = GetTileAtPosition(new Vector2(player1PawnReference.transform.position.x, player1PawnReference.transform.position.y - 1));
+            if (player1PawnTileUp5 != null)
+            {
+                player1PawnTileUp5.isPawn1VerticalPath = true;
+            }
+            Tile player1PawnTileUp6 = GetTileAtPosition(new Vector2(player1PawnReference.transform.position.x, player1PawnReference.transform.position.y - 2));
+            if (player1PawnTileUp6 != null)
+            {
+                player1PawnTileUp6.isPawn1VerticalPath = true;
+            }
+            Tile player1PawnTileUp7 = GetTileAtPosition(new Vector2(player1PawnReference.transform.position.x, player1PawnReference.transform.position.y - 3));
+            if (player1PawnTileUp7 != null)
+            {
+                player1PawnTileUp7.isPawn1VerticalPath = true;
+            }
+            Tile player1PawnTileUp8 = GetTileAtPosition(new Vector2(player1PawnReference.transform.position.x, player1PawnReference.transform.position.y - 4));
+            if (player1PawnTileUp8 != null)
+            {
+                player1PawnTileUp8.isPawn1VerticalPath = true;
             }
         }
         player1KingPosition = player1KingReference.transform.position;
@@ -401,6 +421,26 @@ public class GridManager : MonoBehaviour
             if (player2PawnTileUp4 != null)
             {
                 player2PawnTileUp4.isPawn2VerticalPath = true;
+            }
+            Tile player2PawnTileUp5 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 1));
+            if (player2PawnTileUp5 != null)
+            {
+                player2PawnTileUp5.isPawn2VerticalPath = true;
+            }
+            Tile player2PawnTileUp6 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 2));
+            if (player2PawnTileUp6 != null)
+            {
+                player2PawnTileUp6.isPawn2VerticalPath = true;
+            }
+            Tile player2PawnTileUp7 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 3));
+            if (player2PawnTileUp7 != null)
+            {
+                player2PawnTileUp7.isPawn2VerticalPath = true;
+            }
+            Tile player2PawnTileUp8 = GetTileAtPosition(new Vector2(player2PawnReference.transform.position.x, player2PawnReference.transform.position.y + 4));
+            if (player2PawnTileUp8 != null)
+            {
+                player2PawnTileUp8.isPawn2VerticalPath = true;
             }
         }
         player2KingPosition = player2KingReference.transform.position;
@@ -572,6 +612,7 @@ public class GridManager : MonoBehaviour
 
     public void UnSelectPiece()
     {
+        // When clicking on something that isn't a blue square when a piece is counted as being selected, this method will be called and get rid of the blue squares
         foreach (var tileReference in _tiles)
         {
             tileReference.Value._selection.SetActive(false);

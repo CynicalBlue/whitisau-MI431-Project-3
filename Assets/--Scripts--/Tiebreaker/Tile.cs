@@ -24,27 +24,10 @@ public class Tile : MonoBehaviour
     public bool isOffBoard = false;
     public bool isPawn1VerticalPath = false;
     public bool isPawn2VerticalPath = false;
-    public bool unsafeForKing1 = false;
-    public bool unsafeForKing2 = false;
 
     private void Start()
     {
         gridManagerReference = GameObject.Find("TiebreakerMain").GetComponent<GridManager>();
-    }
-
-    private void Update()
-    {
-        if (currentPieceUnder == gridManagerReference.player1KingReference && !gridManagerReference.player1Check)
-        {
-            if (_selection.activeSelf)
-            {
-                gridManagerReference.player1Check = true;
-            }
-        }
-        if (currentPieceUnder == gridManagerReference.player1KingReference)
-        {
-
-        } 
     }
 
     public void Init(bool isOffset)
@@ -67,11 +50,12 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
+        // Everything to do with the pieces in this script happens here
         cutOffPath1 = false;
         cutOffPath2 = false;
         cutOffPath3 = false;
         cutOffPath4 = false;
-        if (isOffBoard && (hasPlayer1Piece || hasPlayer2Piece) && gridManagerReference.currentPieceSelected == null && gridManagerReference.promoteQuestion.activeSelf != true)
+        if (isOffBoard && hasPlayer1Piece && gridManagerReference.currentPieceSelected == null && gridManagerReference.promoteQuestion.activeSelf != true) // This block is for finding usable tiles when placing a piece
         {
             gridManagerReference.currentPieceSelected = currentPieceUnder;
             if (currentPieceUnder != gridManagerReference.player2PawnReference && currentPieceUnder != gridManagerReference.player1PawnReference)
@@ -91,15 +75,83 @@ public class Tile : MonoBehaviour
                 gridManagerReference.UnSelectPiece();
                 foreach (var tileReference in gridManagerReference._tiles)
                 {
-                    if (!tileReference.Value.hasPlayer1Piece && !tileReference.Value.hasPlayer2Piece && !tileReference.Value.isOffBoard && !tileReference.Value.isPawn1VerticalPath && !tileReference.Value.isPawn2VerticalPath)
+                    if (!tileReference.Value.hasPlayer1Piece && !tileReference.Value.hasPlayer2Piece && !tileReference.Value.isOffBoard)
+                    {
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false)
+                        {
+                            if (!tileReference.Value.isPawn1VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true)
+                        {
+                            if (!tileReference.Value.isPawn2VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true)
+                        {
+                            if (!tileReference.Value.isPawn1VerticalPath && !tileReference.Value.isPawn2VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                return;
+            }
+        }
+        if (isOffBoard && hasPlayer2Piece && gridManagerReference.currentPieceSelected == null && gridManagerReference.promoteQuestion.activeSelf != true) // This block is for finding usable tiles when placing a piece
+        {
+            gridManagerReference.currentPieceSelected = currentPieceUnder;
+            if (currentPieceUnder != gridManagerReference.player2PawnReference && currentPieceUnder != gridManagerReference.player1PawnReference)
+            {
+                gridManagerReference.UnSelectPiece();
+                foreach (var tileReference in gridManagerReference._tiles)
+                {
+                    if (!tileReference.Value.hasPlayer1Piece && !tileReference.Value.hasPlayer2Piece && !tileReference.Value.isOffBoard)
                     {
                         tileReference.Value._selection.SetActive(true);
                     }
                 }
                 return;
             }
+            else
+            {
+                gridManagerReference.UnSelectPiece();
+                foreach (var tileReference in gridManagerReference._tiles)
+                {
+                    if (!tileReference.Value.hasPlayer1Piece && !tileReference.Value.hasPlayer2Piece && !tileReference.Value.isOffBoard)
+                    {
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true)
+                        {
+                            if (!tileReference.Value.isPawn1VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == true && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false)
+                        {
+                            if (!tileReference.Value.isPawn2VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                        if (gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false && gridManagerReference.player1PawnReference.GetComponent<Piece>().player1Aligned == false)
+                        {
+                            if (!tileReference.Value.isPawn1VerticalPath && !tileReference.Value.isPawn2VerticalPath)
+                            {
+                                tileReference.Value._selection.SetActive(true);
+                            }
+                        }
+                    }
+                }
+                return;
+            }
         }
-        if (_selection.activeSelf == true)
+        if (_selection.activeSelf == true) // This block is for moving a piece onto this tile when it has _selection active (the blue shading).  Makes the block above work.
         {
             if (hasPlayer1Piece)
             {
@@ -702,7 +754,7 @@ public class Tile : MonoBehaviour
                 return;
             }
         }
-        if (hasPlayer1Piece)
+        if (hasPlayer1Piece) // This block is how the movement spaces for pieces owned by Player 1 is determined
         {
             if (gridManagerReference.currentPieceSelected != null)
             {
@@ -806,42 +858,42 @@ public class Tile : MonoBehaviour
                 {
                     gridManagerReference.currentPieceSelected = gridManagerReference.player1KingReference;
                     Tile tempTile = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y + 1));
-                    if (tempTile != null && !tempTile.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile != null && !tempTile.hasPlayer1Piece)
                     {
                         tempTile._selection.SetActive(true);
                     }
                     Tile tempTile2 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x + 1, gameObject.transform.position.y + 1));
-                    if (tempTile2 != null && !tempTile2.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile2 != null && !tempTile2.hasPlayer1Piece)
                     {
                         tempTile2._selection.SetActive(true);
                     }
                     Tile tempTile3 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x - 1, gameObject.transform.position.y + 1));
-                    if (tempTile3 != null && !tempTile3.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile3 != null && !tempTile3.hasPlayer1Piece)
                     {
                         tempTile3._selection.SetActive(true);
                     }
                     Tile tempTile4 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x + 1, gameObject.transform.position.y));
-                    if (tempTile4 != null && !tempTile4.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile4 != null && !tempTile4.hasPlayer1Piece)
                     {
                         tempTile4._selection.SetActive(true);
                     }
                     Tile tempTile5 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x - 1, gameObject.transform.position.y));
-                    if (tempTile5 != null && !tempTile5.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile5 != null && !tempTile5.hasPlayer1Piece)
                     {
                         tempTile5._selection.SetActive(true);
                     }
                     Tile tempTile6 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 1));
-                    if (tempTile6 != null && !tempTile6.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile6 != null && !tempTile6.hasPlayer1Piece)
                     {
                         tempTile6._selection.SetActive(true);
                     }
                     Tile tempTile7 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x + 1, gameObject.transform.position.y - 1));
-                    if (tempTile7 != null && !tempTile7.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile7 != null && !tempTile7.hasPlayer1Piece)
                     {
                         tempTile7._selection.SetActive(true);
                     }
                     Tile tempTile8 = gridManagerReference.GetTileAtPosition(new Vector2(gameObject.transform.position.x - 1, gameObject.transform.position.y - 1));
-                    if (tempTile8 != null && !tempTile8.hasPlayer1Piece && !tempTile.unsafeForKing1)
+                    if (tempTile8 != null && !tempTile8.hasPlayer1Piece)
                     {
                         tempTile8._selection.SetActive(true);
                     }
